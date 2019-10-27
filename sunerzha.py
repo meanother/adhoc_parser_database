@@ -37,10 +37,10 @@ def csv_writer(data):
 
 def connect_to_database(id, name, main_category, undermain_category, price, enable, link, i_pics, i_files, i_feature, i_additional_components, i_extra_option, i_accessories, today_time):
     connect = psycopg2.connect(dbname='parsing_db',
-                               user='semenov',
-                               password='12345',
-                               host='0.tpc.ngrok.io',
-                               port=10017)
+                               user='sunerzsha',
+                               password='sunerzsha',
+                               host='localhost',
+                               port=5432)
     connect.autocommit = True
     cursor = connect.cursor()
     cursor.execute('''

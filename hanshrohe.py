@@ -38,7 +38,7 @@ def csv_writer(data):
 
 def connect_to_database(art, name, int_p, link, desc, db_info, db_pictures, today_time):
     connect = psycopg2.connect(dbname='parsing_db',
-                               user='artpole',
+                               user='hansgrohe',
                                password='artpole',
                                host='192.168.1.132',
                                port=5432)

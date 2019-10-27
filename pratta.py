@@ -64,7 +64,7 @@ def connect_to_database(id, link, name, description, link_material, name_materia
     connect = psycopg2.connect(dbname='parsing_db',
                                user='pratta',
                                password='pratta',
-                               host='192.168.1.132',
+                               host='localhost',
                                port=5432)
     connect.autocommit = True
     cursor = connect.cursor()
@@ -237,6 +237,8 @@ def get_data(html):
 
 
     print(data)
+    connect_to_database(id, link, name, description, link_material, name_material, price, complexity, price_for_work,
+                        db_colors, main_pic, default_pic, db_system, today_time)
 
 
 
