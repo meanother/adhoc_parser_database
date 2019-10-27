@@ -37,8 +37,8 @@ def csv_writer(data):
 
 def connect_to_database(id, name, main_category, undermain_category, price, enable, link, i_pics, i_files, i_feature, i_additional_components, i_extra_option, i_accessories, today_time):
     connect = psycopg2.connect(dbname='parsing_db',
-                               user='sunerzsha',
-                               password='sunerzsha',
+                               user='sunerzha',
+                               password='sunerzha',
                                host='localhost',
                                port=5432)
     connect.autocommit = True
