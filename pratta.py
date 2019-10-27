@@ -242,7 +242,7 @@ def get_data(html):
 
 
 
-    csv_writer(data)
+    #csv_writer(data)
 
 
 
