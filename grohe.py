@@ -171,7 +171,7 @@ def get_data(html):
     today_time = str(datetime.date.today())
 
     print(data)
-    connect_to_database(id, name, category, pricex, db_info, tab_download, db_pictures, link, today_time)
+    #connect_to_database(id, name, category, pricex, db_info, tab_download, db_pictures, link, today_time)
     csv_writer(data)
 
 

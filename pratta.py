@@ -69,7 +69,7 @@ def connect_to_database(id, link, name, description, link_material, name_materia
     connect.autocommit = True
     cursor = connect.cursor()
     cursor.execute('''
-    INSERT INTO adhoc_parser.artpole
+    INSERT INTO adhoc_parser.pratta
     (articul, link, name, description, link_material, name_material, price, complexity, price_for_work, colors, main_pic, default_pic, systems, parse_date) 
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id, link, name, description, link_material, name_material, price, complexity, price_for_work, db_colors, main_pic, default_pic, db_system, today_time))
     cursor.close()
