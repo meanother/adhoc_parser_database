@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import requests
 from bs4 import BeautifulSoup as bs
 from config import headers as h, LXM_list
