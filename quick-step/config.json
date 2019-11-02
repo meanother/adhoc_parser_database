@@ -1,0 +1,8 @@
+{
+  "dbname": "parsing_db",
+  "user": "quick_step",
+  "password": "quick_step",
+  "host": "localhost",
+  "port": 5432
+}
+

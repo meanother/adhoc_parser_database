@@ -7,6 +7,7 @@ from config import headers as h
 from time import sleep
 import datetime
 import psycopg2
+import json
 
 '''
         'id': id,                                       # id
@@ -62,19 +63,21 @@ def csv_writer(data):
 '''
 
 def connect_to_database(id, link, name, description, link_material, name_material, price, complexity, price_for_work, db_colors, main_pic, default_pic, db_system, today_time):
-    connect = psycopg2.connect(dbname='parsing_db',
-                               user='pratta',
-                               password='pratta',
-                               host='localhost',
-                               port=5432)
-    connect.autocommit = True
-    cursor = connect.cursor()
-    cursor.execute('''
-    INSERT INTO adhoc_parser.pratta
-    (articul, link, name, description, link_material, name_material, price, complexity, price_for_work, colors, main_pic, default_pic, systems, parse_date) 
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id, link, name, description, link_material, name_material, price, complexity, price_for_work, db_colors, main_pic, default_pic, db_system, today_time))
-    cursor.close()
-    connect.close()
+    with open('config.json', 'r') as file1:
+        data = json.loads(file1.read())
+        connect = psycopg2.connect(dbname=data['dbname'],
+                                   user=data['user'],
+                                   password=data['password'],
+                                   host=data['host'],
+                                   port=data['port'])
+        connect.autocommit = True
+        cursor = connect.cursor()
+        cursor.execute('''
+        INSERT INTO adhoc_parser.pratta
+        (articul, link, name, description, link_material, name_material, price, complexity, price_for_work, colors, main_pic, default_pic, systems, parse_date) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id, link, name, description, link_material, name_material, price, complexity, price_for_work, db_colors, main_pic, default_pic, db_system, today_time))
+        cursor.close()
+        connect.close()
 
 
 

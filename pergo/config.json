@@ -1,0 +1,8 @@
+{
+  "dbname": "parsing_db",
+  "user": "pergo",
+  "password": "pergo",
+  "host": "localhost",
+  "port": 5432
+}
+

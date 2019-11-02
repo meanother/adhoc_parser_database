@@ -8,6 +8,7 @@ import pprint
 from time import sleep
 import datetime
 import psycopg2
+import json
 
 
 def csv_writer(data):
@@ -34,19 +35,21 @@ def csv_writer(data):
         '''
 
 def connect_to_database(id, name, category, pricex, db_info, tab_download, db_pictures, link, today_time):
-    connect = psycopg2.connect(dbname='parsing_db',
-                               user='grohe',
-                               password='grohe',
-                               host='localhost',
-                               port=5432)
-    connect.autocommit = True
-    cursor = connect.cursor()
-    cursor.execute('''
-    INSERT INTO adhoc_parser.grohe
-    (articul, name, category, price, info, downloads, pictures, link, parse_date) 
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id, name, category, pricex, db_info, tab_download, db_pictures, link, today_time))
-    cursor.close()
-    connect.close()
+    with open('config.json', 'r') as file1:
+        data = json.loads(file1.read())
+        connect = psycopg2.connect(dbname=data['dbname'],
+                                   user=data['user'],
+                                   password=data['password'],
+                                   host=data['host'],
+                                   port=data['port'])
+        connect.autocommit = True
+        cursor = connect.cursor()
+        cursor.execute('''
+        INSERT INTO adhoc_parser.grohe
+        (articul, name, category, price, info, downloads, pictures, link, parse_date) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id, name, category, pricex, db_info, tab_download, db_pictures, link, today_time))
+        cursor.close()
+        connect.close()
 
 
 '''

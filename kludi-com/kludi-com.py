@@ -9,6 +9,7 @@ import time
 import csv
 import datetime
 import psycopg2
+import json
 
 
 #filename = str((time.asctime() + '_kludi.csv'))
@@ -25,19 +26,21 @@ def csv_writer(data):
         ))
 
 def connect_to_database(articul, link, jpeg, size, data_sheet ,today_time):
-    connect = psycopg2.connect(dbname='parsing_db',
-                               user='kludi_com',
-                               password='kludi_com',
-                               host='localhost',
-                               port=5432)
-    connect.autocommit = True
-    cursor = connect.cursor()
-    cursor.execute('''
-    INSERT INTO adhoc_parser.kludi_com
-    (articul, link, jpegs, size, data_sheet, parse_date) 
-    VALUES (%s, %s, %s, %s, %s, %s)''', (articul, link, jpeg, size, data_sheet, today_time))
-    cursor.close()
-    connect.close()
+    with open('config.json', 'r') as file1:
+        data = json.loads(file1.read())
+        connect = psycopg2.connect(dbname=data['dbname'],
+                                   user=data['user'],
+                                   password=data['password'],
+                                   host=data['host'],
+                                   port=data['port'])
+        connect.autocommit = True
+        cursor = connect.cursor()
+        cursor.execute('''
+        INSERT INTO adhoc_parser.kludi_com
+        (articul, link, jpegs, size, data_sheet, parse_date) 
+        VALUES (%s, %s, %s, %s, %s, %s)''', (articul, link, jpeg, size, data_sheet, today_time))
+        cursor.close()
+        connect.close()
 
 '''
         'articul': articul,

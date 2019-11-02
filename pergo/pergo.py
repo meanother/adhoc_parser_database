@@ -7,6 +7,7 @@ from time import sleep
 import pprint
 import psycopg2
 import datetime
+import json
 
 
 def csv_writer(data):
@@ -46,19 +47,21 @@ def csv_writer(data):
 
 
 def connect_to_database(articul, name, link, garant, db_pics, db_feature1, db_feature2, db_download, db_dop1, db_dop2, db_dop3, db_dop4, db_dop5, today_time):
-    connect = psycopg2.connect(dbname='parsing_db',
-                               user='pergo',
-                               password='pergo',
-                               host='localhost',
-                               port=5432)
-    connect.autocommit = True
-    cursor = connect.cursor()
-    cursor.execute('''
-    INSERT INTO adhoc_parser.pergo
-    (articul, name, link, garant, pictures, feature_1, feature_2, download, extra_accessories_1,extra_accessories_2,extra_accessories_3 ,extra_accessories_4 ,extra_accessories_5, parse_date) 
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (articul, name, link, garant, db_pics, db_feature1, db_feature2, db_download, db_dop1, db_dop2, db_dop3, db_dop4, db_dop5, today_time))
-    cursor.close()
-    connect.close()
+    with open('config.json', 'r') as file1:
+        data = json.loads(file1.read())
+        connect = psycopg2.connect(dbname=data['dbname'],
+                                   user=data['user'],
+                                   password=data['password'],
+                                   host=data['host'],
+                                   port=data['port'])
+        connect.autocommit = True
+        cursor = connect.cursor()
+        cursor.execute('''
+        INSERT INTO adhoc_parser.pergo
+        (articul, name, link, garant, pictures, feature_1, feature_2, download, extra_accessories_1,extra_accessories_2,extra_accessories_3 ,extra_accessories_4 ,extra_accessories_5, parse_date) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (articul, name, link, garant, db_pics, db_feature1, db_feature2, db_download, db_dop1, db_dop2, db_dop3, db_dop4, db_dop5, today_time))
+        cursor.close()
+        connect.close()
 
 
 def get_html(url, h):

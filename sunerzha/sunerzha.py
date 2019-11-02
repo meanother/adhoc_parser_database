@@ -7,6 +7,8 @@ from config import headers as h
 from time import sleep
 import psycopg2
 import datetime
+import json
+
 
 def get_html(url, headers):
     session = requests.Session()
@@ -37,19 +39,21 @@ def csv_writer(data):
 
 
 def connect_to_database(id, name, main_category, undermain_category, price, enable, link, i_pics, i_files, i_feature, i_additional_components, i_extra_option, i_accessories, today_time):
-    connect = psycopg2.connect(dbname='parsing_db',
-                               user='sunerzha',
-                               password='sunerzha',
-                               host='localhost',
-                               port=5432)
-    connect.autocommit = True
-    cursor = connect.cursor()
-    cursor.execute('''
-    INSERT INTO adhoc_parser.SUNERZSHA
-    (item_id, name, category_first, category_second, price, accessibility, link, pics, files, featurecs, additional_componentscs, extra_option, accessoriescs,parse_date) 
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id, name, main_category, undermain_category, price, enable, link, i_pics, i_files, i_feature, i_additional_components, i_extra_option, i_accessories,today_time))
-    cursor.close()
-    connect.close()
+    with open('config.json', 'r') as file1:
+        data = json.loads(file1.read())
+        connect = psycopg2.connect(dbname=data['dbname'],
+                                   user=data['user'],
+                                   password=data['password'],
+                                   host=data['host'],
+                                   port=data['port'])
+        connect.autocommit = True
+        cursor = connect.cursor()
+        cursor.execute('''
+        INSERT INTO adhoc_parser.SUNERZSHA
+        (item_id, name, category_first, category_second, price, accessibility, link, pics, files, featurecs, additional_componentscs, extra_option, accessoriescs,parse_date) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id, name, main_category, undermain_category, price, enable, link, i_pics, i_files, i_feature, i_additional_components, i_extra_option, i_accessories,today_time))
+        cursor.close()
+        connect.close()
 
 
 

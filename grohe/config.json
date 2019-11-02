@@ -1,0 +1,8 @@
+{
+  "dbname": "parsing_db",
+  "user": "grohe",
+  "password": "grohe",
+  "host": "localhost",
+  "port": 5432
+}
+
