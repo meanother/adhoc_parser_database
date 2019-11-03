@@ -1,6 +1,6 @@
-drop table adhoc_parser.sunerzsha;
-create table adhoc_parser.sunerzsha (
-    id serial not null constraint sunerzsha_key primary key,
+drop table adhoc_parser.sunerzha;
+create table adhoc_parser.sunerzha (
+    id serial not null constraint sunerzha_key primary key,
     item_id varchar(255) not null,
     name varchar(255) not null,
     category_first varchar(255) null,
@@ -20,4 +20,5 @@ GRANT ALL ON ALL TABLES IN SCHEMA adhoc_parser to sunerzha;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA adhoc_parser to sunerzha;
 GRANT ALL ON ALL FUNCTIONS IN SCHEMA adhoc_parser to sunerzha;
 GRANT USAGE ON SCHEMA adhoc_parser TO sunerzha;
+alter table adhoc_parser.grohe alter column price TYPE varchar(255);
 commit;

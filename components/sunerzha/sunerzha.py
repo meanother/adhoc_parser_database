@@ -49,7 +49,7 @@ def connect_to_database(id, name, main_category, undermain_category, price, enab
         connect.autocommit = True
         cursor = connect.cursor()
         cursor.execute('''
-        INSERT INTO adhoc_parser.SUNERZSHA
+        INSERT INTO adhoc_parser.SUNERZHA
         (item_id, name, category_first, category_second, price, accessibility, link, pics, files, featurecs, additional_componentscs, extra_option, accessoriescs,parse_date) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id, name, main_category, undermain_category, price, enable, link, i_pics, i_files, i_feature, i_additional_components, i_extra_option, i_accessories,today_time))
         cursor.close()
