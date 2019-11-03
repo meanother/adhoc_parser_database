@@ -109,7 +109,7 @@ def get_data(html):
             price = (soup.find('div', id='product-info').find('div', class_='product-price__block-info').find('span',class_='product-price__special') \
                         .text.replace(' ₽Купить', '').replace(' ₽', '').replace(' ', '').strip() + ' ' + soup.find('div',id='product-info').find('div',class_='product-price__block-info').find('span', class_='savings').find('span', class_='savings__procent').text.replace(' ', '').strip())
         except:
-            price = 0
+            price = ''
     information = []
 
     try:
