@@ -158,7 +158,7 @@ def get_data(html):
     link = soup.find('link', rel='canonical').get('href')
     #print(link)
 
-    pricex = int(price.replace('\xa0', ''))
+    pricex = price.replace('\xa0', '')
     data = {
         'id': id,
         'name': name,
