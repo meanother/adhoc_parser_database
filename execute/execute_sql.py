@@ -11,12 +11,15 @@ def connect_to_database(file):
     connect.autocommit = True
     cursor = connect.cursor()
     with open(file, 'r') as file:
-        cursor.execute(file.read())
-        try:
-            for row in cursor:
-                print(row)
-        except psycopg2.ProgrammingError:
-            pass
+        rlist = file.read()
+        list = rlist.replace('\n', '').split(';')
+        for script in list[:-1]:
+            cursor.execute(script)
+            try:
+                for row in cursor:
+                    print(row)
+            except psycopg2.ProgrammingError:
+                pass
     cursor.close()
     connect.close()
 
