@@ -24,7 +24,7 @@ def connect_to_database(file):
     connect.close()
 
 
-file = 'create.sql'
+file = 'create_table.sql'
 connect_to_database(file)
 
 
