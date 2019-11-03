@@ -3,9 +3,9 @@ import psycopg2
 
 
 def connect_to_database(querry):
-    connect = psycopg2.connect(dbname='manjaro_db',
+    connect = psycopg2.connect(dbname='parsing_db',
                                user='semenov',
-                               password='',
+                               password='12345',
                                host='localhost',
                                port=5432)
     connect.autocommit = True
