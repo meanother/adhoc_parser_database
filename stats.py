@@ -19,17 +19,17 @@ def connect_to_database(querry):
 
 querry = '''
 select * from (
-select name 'kludi_com',count(*), parse_date from adhoc_parser.kludi_com group by datex
+select name 'kludi_com',count(*), parse_date from adhoc_parser.kludi_com group by parse_date
 union
-select name'grohe', count(*), parse_date from adhoc_parser.grohe group by datex
+select name'grohe', count(*), parse_date from adhoc_parser.grohe group by parse_date
 union
-select name'pergo', count(*), parse_date from adhoc_parser.pergo group by datex
+select name'pergo', count(*), parse_date from adhoc_parser.pergo group by parse_date
 union
-select name'pratta', count(*), parse_date from adhoc_parser.pratta group by datex
+select name'pratta', count(*), parse_date from adhoc_parser.pratta group by parse_date
 union
-select name'quick-step', count(*), parse_date from adhoc_parser.quick_step group by datex
+select name'quick-step', count(*), parse_date from adhoc_parser.quick_step group by parse_date
 union
-select name'sunerzha', count(*), parse_date from adhoc_parser.sunerzha group by datex) as foo
+select name'sunerzha', count(*), parse_date from adhoc_parser.sunerzha group by datparse_dateex) as foo
 order by name;
 '''
 connect_to_database(str(querry))
