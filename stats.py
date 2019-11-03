@@ -29,7 +29,7 @@ select name'pratta', count(*), parse_date from adhoc_parser.pratta group by pars
 union
 select name'quick-step', count(*), parse_date from adhoc_parser.quick_step group by parse_date
 union
-select name'sunerzha', count(*), parse_date from adhoc_parser.sunerzha group by datparse_dateex) as foo
+select name'sunerzha', count(*), parse_date from adhoc_parser.sunerzha group by parse_date) as foo
 order by name;
 '''
 connect_to_database(str(querry))
