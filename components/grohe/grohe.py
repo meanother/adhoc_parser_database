@@ -2,8 +2,8 @@
 import requests
 from bs4 import BeautifulSoup as bs
 import csv
-from config import headers as h
-from config import GROHE_URLS
+from help_urls import headers as h
+from help_urls import GROHE_URLS
 import pprint
 from time import sleep
 import datetime
