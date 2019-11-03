@@ -9,7 +9,7 @@ reg = r'\D+.py'
 
 def get_componentns():
     comps = []
-    command = subprocess.Popen('ls ~/python/adhoc_parser/components/', shell=True, stdout=subprocess.PIPE)
+    command = subprocess.Popen('ls /home/ubpc/adhoc_parser_database/components/', shell=True, stdout=subprocess.PIPE)
     components = command.communicate()
     for i in components:
         try:
@@ -24,7 +24,7 @@ def get_componentns():
 
 
 def mgmt(name):
-    command = subprocess.Popen(f'ps -aux | grep "python3 ~/python/adhoc_parser/components/{name}/{name}.py"', shell=True, stdout=subprocess.PIPE)
+    command = subprocess.Popen(f'ps -aux | grep "python3 /home/ubpc/adhoc_parser_database/components/{name}/{name}.py"', shell=True, stdout=subprocess.PIPE)
     data = command.communicate()
     for line in data:
         try:
