@@ -62,7 +62,7 @@ order by name;
 '''
 
 
-order = connect_to_database(querry)
+order = connect_to_database(day_querry)
 print(order)
 print(type(order))
 
