@@ -4,6 +4,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
 import psycopg2
+import datetime
+
 
 
 def connect_to_database(querry):
@@ -24,6 +26,9 @@ def connect_to_database(querry):
     return fulstat
 
 
+
+parse_date = str(datetime.date.today())
+
 querry = '''
 select * from (
 select name 'kludi_com',count(*), parse_date from adhoc_parser.kludi_com group by parse_date
@@ -39,6 +44,23 @@ union
 select name'sunerzha', count(*), parse_date from adhoc_parser.sunerzha group by parse_date) as foo
 order by name;
 '''
+
+day_querry = f'''
+select * from (
+select name 'kludi_com',count(*), parse_date from adhoc_parser.kludi_com where parse_date = {parse_date} group by parse_date
+union
+select name'grohe', count(*), parse_date from adhoc_parser.grohe where parse_date = {parse_date} group by parse_date
+union
+select name'pergo', count(*), parse_date from adhoc_parser.pergo where parse_date = {parse_date} group by parse_date
+union
+select name'pratta', count(*), parse_date from adhoc_parser.pratta where parse_date = {parse_date} group by parse_date
+union
+select name'quick-step', count(*), parse_date from adhoc_parser.quick_step where parse_date = {parse_date} group by parse_date
+union
+select name'sunerzha', count(*), parse_date from adhoc_parser.sunerzha where parse_date = {parse_date} group by parse_date) as foo
+order by name;
+'''
+
 
 order = connect_to_database(querry)
 print(order)
