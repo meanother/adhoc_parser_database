@@ -47,7 +47,8 @@ def csv_writer(data):
 
 
 def connect_to_database(articul, name, link, garant, db_pics, db_feature1, db_feature2, db_download, db_dop1, db_dop2, db_dop3, db_dop4, db_dop5, today_time):
-    with open('config.json', 'r') as file1:
+    #with open('config.json', 'r') as file1:
+    with open('/home/ubpc/adhoc_parser_database/components/pergo/config.json', 'r') as file1:
         data = json.loads(file1.read())
         connect = psycopg2.connect(dbname=data['dbname'],
                                    user=data['user'],

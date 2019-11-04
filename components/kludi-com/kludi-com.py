@@ -26,7 +26,8 @@ def csv_writer(data):
         ))
 
 def connect_to_database(articul, link, jpeg, size, data_sheet ,today_time):
-    with open('config.json', 'r') as file1:
+    #with open('config.json', 'r') as file1:
+    with open('/home/ubpc/adhoc_parser_database/components/kludi-com/config.json', 'r') as file1:
         data = json.loads(file1.read())
         connect = psycopg2.connect(dbname=data['dbname'],
                                    user=data['user'],

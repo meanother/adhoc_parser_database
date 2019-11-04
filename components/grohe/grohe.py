@@ -35,7 +35,8 @@ def csv_writer(data):
         '''
 
 def connect_to_database(id, name, category, pricex, db_info, tab_download, db_pictures, link, today_time):
-    with open('config.json', 'r') as file1:
+    #with open('config.json', 'r') as file1:
+    with open('/home/ubpc/adhoc_parser_database/components/grohe/config.json', 'r') as file1:
         data = json.loads(file1.read())
         connect = psycopg2.connect(dbname=data['dbname'],
                                    user=data['user'],

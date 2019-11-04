@@ -39,7 +39,8 @@ def csv_writer(data):
 
 
 def connect_to_database(id, name, main_category, undermain_category, price, enable, link, i_pics, i_files, i_feature, i_additional_components, i_extra_option, i_accessories, today_time):
-    with open('config.json', 'r') as file1:
+    #with open('config.json', 'r') as file1:
+    with open('/home/ubpc/adhoc_parser_database/components/sunerzha/config.json', 'r') as file1:
         data = json.loads(file1.read())
         connect = psycopg2.connect(dbname=data['dbname'],
                                    user=data['user'],

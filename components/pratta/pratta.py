@@ -63,7 +63,8 @@ def csv_writer(data):
 '''
 
 def connect_to_database(id, link, name, description, link_material, name_material, price, complexity, price_for_work, db_colors, main_pic, default_pic, db_system, today_time):
-    with open('config.json', 'r') as file1:
+    #with open('config.json', 'r') as file1:
+    with open('/home/ubpc/adhoc_parser_database/components/pratta/config.json', 'r') as file1:
         data = json.loads(file1.read())
         connect = psycopg2.connect(dbname=data['dbname'],
                                    user=data['user'],
