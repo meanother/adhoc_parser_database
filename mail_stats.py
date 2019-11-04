@@ -47,17 +47,17 @@ order by name;
 
 day_querry = f'''
 select * from (
-select name 'kludi_com',count(*), parse_date from adhoc_parser.kludi_com where parse_date = {parse_date} group by parse_date
+select name 'kludi_com',count(*), parse_date from adhoc_parser.kludi_com where parse_date = '{parse_date}' group by parse_date
 union
-select name'grohe', count(*), parse_date from adhoc_parser.grohe where parse_date = {parse_date} group by parse_date
+select name'grohe', count(*), parse_date from adhoc_parser.grohe where parse_date = '{parse_date}' group by parse_date
 union
-select name'pergo', count(*), parse_date from adhoc_parser.pergo where parse_date = {parse_date} group by parse_date
+select name'pergo', count(*), parse_date from adhoc_parser.pergo where parse_date = '{parse_date}' group by parse_date
 union
-select name'pratta', count(*), parse_date from adhoc_parser.pratta where parse_date = {parse_date} group by parse_date
+select name'pratta', count(*), parse_date from adhoc_parser.pratta where parse_date = '{parse_date}' group by parse_date
 union
-select name'quick-step', count(*), parse_date from adhoc_parser.quick_step where parse_date = {parse_date} group by parse_date
+select name'quick-step', count(*), parse_date from adhoc_parser.quick_step where parse_date = '{parse_date}' group by parse_date
 union
-select name'sunerzha', count(*), parse_date from adhoc_parser.sunerzha where parse_date = {parse_date} group by parse_date) as foo
+select name'sunerzha', count(*), parse_date from adhoc_parser.sunerzha where parse_date = '{parse_date}' group by parse_date) as foo
 order by name;
 '''
 
