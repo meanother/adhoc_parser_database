@@ -7,6 +7,7 @@ import psycopg2
 
 
 def connect_to_database(querry):
+    fulstat = []
     connect = psycopg2.connect(dbname='parsing_db',
                                user='semenov',
                                password='12345',
@@ -16,9 +17,11 @@ def connect_to_database(querry):
     cursor = connect.cursor()
     cursor.execute(querry)
     for row in cursor:
-        print(row)
+        fulstat.append(row)
+        #print(row)
     cursor.close()
     connect.close()
+    return fulstat
 
 
 querry = '''
@@ -37,8 +40,9 @@ select name'sunerzha', count(*), parse_date from adhoc_parser.sunerzha group by 
 order by name;
 '''
 
-order = connect_to_database(str(querry))
-
+order = connect_to_database(querry)
+print(order)
+print(type(order))
 
 msg = MIMEMultipart()
 msg['Subject'] = 'Number of rows in tables'
@@ -46,7 +50,9 @@ msg['From'] = 'juicehqperfect@gmail.com'
 msg['To'] = 'juicehq@yandex.ru'
 
 
-message = 'look at me: \n' + str(order)
+#message = (" ".join(str(x) for x in order)).replace(' ', '\n')
+message = ("//".join(str(x) for x in order).replace('//', '\n'))
+
 
 part = MIMEText(message, 'plain')
 msg.attach(part)
