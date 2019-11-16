@@ -24,7 +24,7 @@ def connect_to_database(file):
     connect.close()
 
 
-file = 'create_table.sql'
+file = '/home/ubpc/adhoc_parser_database/PATCHERS/' + input('Input name sql-file: ')
 connect_to_database(file)
 
 

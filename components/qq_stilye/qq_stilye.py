@@ -10,6 +10,48 @@ import datetime
 import json
 import re
 
+today_time = str(datetime.date.today())
+
+'''
+        'articul': articul,
+        'enable': enable,
+        'code': code,
+        'price': price,
+        'name': name,
+        'link': link,
+        'main_pic': main_pic,
+        'other_pic': ready_other_pic,
+        'path': ready_path,
+        'features': ready_features,
+        'description': description_complect,
+'''
+
+
+
+
+def connect_to_database(articul, enable, code, price, name, link, main_pic, ready_other_pic, ready_path, ready_features, description_complect, today_time):
+    with open('/home/ubpc/adhoc_parser_database/components/qq_stilye/config.json', 'r') as file1:
+    #with open('/home/arty/python/adhoc_parser/components/qq_stilye/config.json', 'r') as file1:
+        data = json.loads(file1.read())
+        connect = psycopg2.connect(dbname=data['dbname'],
+        #connect = psycopg2.connect(dbname='manjaro_db',
+                                   user=data['user'],
+                                   #user='semenov',
+                                   #password='',
+                                   password=data['password'],
+                                   host=data['host'],
+                                   #host='localhost',
+                                   port=data['port'])
+                                   #port=5432)
+        connect.autocommit = True
+        cursor = connect.cursor()
+        cursor.execute('''
+        INSERT INTO CR_MODEL.qq_stilye
+        (articul, enable, code, price, name, link, main_pic, other_pic, path, feature, description ,parse_date) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (articul, enable, code, price, name, link, main_pic, ready_other_pic, ready_path, ready_features, description_complect, today_time))
+        cursor.close()
+        connect.close()
+
 
 def get_html(url, headers):
     session = requests.Session()
@@ -53,9 +95,9 @@ def get_data(html):
     .find('div', id='js_product_detail_info').find('fieldset', class_='product-detail-config__code code')\
     .find('span').text.strip()
 
-    price = soup.find('div', class_='product-detail-info__text')\
+    price = int(soup.find('div', class_='product-detail-info__text')\
     .find('div', id='js_product_detail_info').find('div', class_='product-detail-config__item-price')\
-    .find('span').text.strip().replace(' ', '')
+    .find('span').text.strip().replace(' ', ''))
 
 
     name = soup.find('div', id='product_detail').find('h1').text.strip()
@@ -98,7 +140,7 @@ def get_data(html):
         description_complect = soup.find('div', class_='product-detail-description__content has-collapse__body')\
         .text.strip().replace('\n', ' ;; ')
     except AttributeError:
-        description_complect = None
+        description_complect = ''
 
     data = {
         'articul': articul,
@@ -114,6 +156,7 @@ def get_data(html):
         'description': description_complect,
     }
     print(data)
+    connect_to_database(articul, enable, code, price, name, link, main_pic, ready_other_pic, ready_path, ready_features, description_complect, today_time)
 
 
 def main():

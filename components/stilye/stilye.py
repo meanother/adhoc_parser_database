@@ -11,6 +11,7 @@ import json
 import re
 
 list_accessory = []
+today_time = str(datetime.date.today())
 
 
 def csv_writer(data):
@@ -29,6 +30,45 @@ def csv_writer(data):
             data['equipment'],
             data['accessory'],
         ))
+
+
+'''
+            'id': id_component,
+            'name_first': name,
+            'name_second': name_component,
+            'picture': jpeg_component,
+            'main_picture': main_pic,
+            'price': price_component,
+            'coating': coating_component,
+            'category': category,
+            'description': ready_description,
+            'equipment': ready_equipment,
+            'accessory': db_column_accessory
+'''
+
+def connect_to_database(id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time):
+    with open('/home/ubpc/adhoc_parser_database/components/qq_stilye/config.json', 'r') as file1:
+    #with open('/home/arty/python/adhoc_parser/components/stilye/config.json', 'r') as file1:
+        data = json.loads(file1.read())
+        connect = psycopg2.connect(dbname=data['dbname'],
+        #connect = psycopg2.connect(dbname='manjaro_db',
+                                   user=data['user'],
+                                   #user='semenov',
+                                   #password='',
+                                   password=data['password'],
+                                   host=data['host'],
+                                   #host='localhost',
+                                   port=data['port'])
+                                   #port=5432)
+        connect.autocommit = True
+        cursor = connect.cursor()
+        cursor.execute('''
+        INSERT INTO CR_MODEL.stilye
+        (articul, name_first, name_second, picture, main_picture, price, coating, category, description, equipment, accessory ,parse_date) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time))
+        cursor.close()
+        connect.close()
+
 
 
 def get_html(url, headers):
@@ -70,7 +110,7 @@ def get_order_info(html):
                 list_description.append(desc)
         ready_description = ''.join(list_description)
     except AttributeError:
-        ready_description = None
+        ready_description = ''
 
     list_equipment = []
     try:
@@ -79,7 +119,7 @@ def get_order_info(html):
             list_equipment.append(equip.text + ' ;; ')
         ready_equipment = ''.join(list_equipment)
     except AttributeError:
-        ready_equipment = None
+        ready_equipment = ''
 
 
     components = soup.find('section', class_='productDetail-price site-section').find('div', class_='productDetail-price_tableWrapper').find_all('tr')[1:]
@@ -88,10 +128,12 @@ def get_order_info(html):
         try:
             jpeg_component = 'http://www.stilye.ru' + component[0].find('a').get('href')
         except AttributeError:
-            jpeg_component = None
+            jpeg_component = ''
         id_component = component[1].text.strip()
-        name_component = component[2].text.strip()
-        coating_component = None
+
+        name_component = component[2].text.strip().replace('(', '(').replace(')', ')')
+
+        coating_component = ''
         try:
             price_component = int(component[3].text.strip())
         except ValueError:
@@ -140,7 +182,7 @@ def get_order_info(html):
                     #print(item)
                 db_column_accessory = ''.join(column_accessory)
             except:
-                db_column_accessory = None
+                db_column_accessory = ''
 
 
         #print(name)
@@ -163,8 +205,10 @@ def get_order_info(html):
             'equipment': ready_equipment,
             'accessory': db_column_accessory
         }
-        print(data)
-        csv_writer(data)
+
+        #csv_writer(data)
+        connect_to_database(id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time)
+
 
 
 def main():
