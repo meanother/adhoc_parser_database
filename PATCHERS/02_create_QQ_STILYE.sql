@@ -1,4 +1,4 @@
-create table CR_MODEL.qq_stilye(
+create table adhoc_parser.qq_stilye(
     id serial not null constraint qq_stilye_key primary key,
     articul varchar(255) not null ,
     enable varchar(500) null ,
