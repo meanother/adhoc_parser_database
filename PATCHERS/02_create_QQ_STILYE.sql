@@ -12,8 +12,8 @@ create table CR_MODEL.qq_stilye(
     feature text null ,
     description text null ,
     parse_date date);
-CREATE USER qq_stilye WITH password 'qq_stilye';
-GRANT all privileges ON  DATABASE parsing_db to qq_stilye;
+--CREATE USER qq_stilye WITH password 'qq_stilye';
+--GRANT all privileges ON  DATABASE parsing_db to qq_stilye;
 GRANT ALL ON ALL TABLES IN SCHEMA adhoc_parser to qq_stilye;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA adhoc_parser to qq_stilye;
 GRANT ALL ON ALL FUNCTIONS IN SCHEMA adhoc_parser to qq_stilye;
