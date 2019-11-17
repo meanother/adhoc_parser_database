@@ -207,6 +207,7 @@ def get_order_info(html):
         }
 
         #csv_writer(data)
+        print(data)
         connect_to_database(id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time)
 
 
