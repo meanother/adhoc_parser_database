@@ -63,7 +63,7 @@ def connect_to_database(id_component, name, name_component, jpeg_component, main
         connect.autocommit = True
         cursor = connect.cursor()
         cursor.execute('''
-        INSERT INTO cr_model.stilye
+        INSERT INTO adhoc_parser.stilye
         (articul, name_first, name_second, picture, main_picture, price, coating, category, description, equipment, accessory ,parse_date, link) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time, url))
         cursor.close()

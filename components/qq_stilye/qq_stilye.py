@@ -46,7 +46,7 @@ def connect_to_database(articul, enable, code, price, name, link, main_pic, read
         connect.autocommit = True
         cursor = connect.cursor()
         cursor.execute('''
-        INSERT INTO cr_model.qq_stilye
+        INSERT INTO adhoc_parser.qq_stilye
         (articul, enable, code, price, name, link, main_pic, other_pic, path, feature, description ,parse_date) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (articul, enable, code, price, name, link, main_pic, ready_other_pic, ready_path, ready_features, description_complect, today_time))
         cursor.close()
