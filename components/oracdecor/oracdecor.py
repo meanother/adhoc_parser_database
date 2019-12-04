@@ -211,7 +211,6 @@ def get_data(card, html):
 
 def main():
     headers = h
-    '''
 
     url = 'https://oracdecor.ru/'
     tabs = get_store_menu(get_html(url, headers))
@@ -242,6 +241,8 @@ def main():
         get_data(url, (get_html(url, headers)))
         sleep(0.1)
         print('-------')
+    '''
+
 
 if __name__ == '__main__':
     main()
