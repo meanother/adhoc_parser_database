@@ -242,8 +242,8 @@ def get_data(html):
 
 
     print(data)
-    connect_to_database(id, link, name, description, link_material, name_material, price, complexity, price_for_work,
-                        db_colors, main_pic, default_pic, db_system, today_time)
+    #connect_to_database(id, link, name, description, link_material, name_material, price, complexity, price_for_work,
+    #                    db_colors, main_pic, default_pic, db_system, today_time)
 
 
 

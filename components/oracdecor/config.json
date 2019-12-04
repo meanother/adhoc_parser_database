@@ -1,0 +1,8 @@
+{
+  "dbname": "parsing_db",
+  "user": "kludi_com",
+  "password": "kludi_com",
+  "host": "localhost",
+  "port": 5432
+}
+

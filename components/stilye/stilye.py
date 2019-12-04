@@ -46,7 +46,7 @@ def csv_writer(data):
             'accessory': db_column_accessory
 '''
 
-def connect_to_database(id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time):
+def connect_to_database(id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time, url):
     with open('/home/ubpc/adhoc_parser_database/components/qq_stilye/config.json', 'r') as file1:
     #with open('/home/arty/python/adhoc_parser/components/stilye/config.json', 'r') as file1:
         data = json.loads(file1.read())
@@ -63,9 +63,9 @@ def connect_to_database(id_component, name, name_component, jpeg_component, main
         connect.autocommit = True
         cursor = connect.cursor()
         cursor.execute('''
-        INSERT INTO adhoc_parser.stilye
-        (articul, name_first, name_second, picture, main_picture, price, coating, category, description, equipment, accessory ,parse_date) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time))
+        INSERT INTO cr_model.stilye
+        (articul, name_first, name_second, picture, main_picture, price, coating, category, description, equipment, accessory ,parse_date, link) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time, url))
         cursor.close()
         connect.close()
 
@@ -89,7 +89,8 @@ def get_data(html):
         list_data.append(order)
 
 
-def get_order_info(html):
+def get_order_info(url, html):
+    print('this is url from middle define: ' + url)
     soup = bs(html, 'lxml')
     name = soup.find('h1').text.strip()
     category = soup.find('div', class_='breadcrumbs').find('a').text.strip()
@@ -196,6 +197,7 @@ def get_order_info(html):
             'id': id_component,
             'name_first': name,
             'name_second': name_component,
+            'url': url,
             'picture': jpeg_component,
             'main_picture': main_pic,
             'price': price_component,
@@ -208,7 +210,7 @@ def get_order_info(html):
 
         #csv_writer(data)
         print(data)
-        connect_to_database(id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time)
+        connect_to_database(id_component, name, name_component, jpeg_component, main_pic, price_component, coating_component, category, ready_description, ready_equipment, db_column_accessory ,today_time, url)
 
 
 
@@ -226,12 +228,12 @@ def main():
 
     for data_url in set(list_data):
         print(data_url)
-        get_order_info(get_html(data_url, h))
+        get_order_info(data_url, get_html(data_url, h))
         sleep(0.7)
 
     for accessory in set(list_accessory):
         print(accessory)
-        get_order_info((get_html(accessory, h)))
+        get_order_info(accessory, (get_html(accessory, h)))
         sleep(0.7)
 
     # Test items
@@ -245,10 +247,10 @@ def main():
     ]
     for url in urls:
         print(url)
-        get_order_info(get_html(url, headers))
+        get_order_info(url, get_html(url, headers))
         print('---------')
-    '''
 
+    '''
 
 if __name__ == '__main__':
     main()

@@ -46,7 +46,7 @@ def connect_to_database(articul, enable, code, price, name, link, main_pic, read
         connect.autocommit = True
         cursor = connect.cursor()
         cursor.execute('''
-        INSERT INTO adhoc_parser.qq_stilye
+        INSERT INTO cr_model.qq_stilye
         (articul, enable, code, price, name, link, main_pic, other_pic, path, feature, description ,parse_date) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (articul, enable, code, price, name, link, main_pic, ready_other_pic, ready_path, ready_features, description_complect, today_time))
         cursor.close()
@@ -176,7 +176,6 @@ def main():
         get_data(get_html(url, headers))
         sleep(0.9)
 
-    '''
     urls = [
         'https://qq.ru/product/00000126187/',
         'https://qq.ru/product/00000013454/',
@@ -188,6 +187,16 @@ def main():
     for url in urls:
         get_data(get_html(url, headers))
     '''
+
+    urls = [
+        'https://qq.ru/product/00000126117/',
+        'https://qq.ru/product/00000126115/',
+        'https://qq.ru/product/00000126116/',
+        'https://qq.ru/product/00000126118/']
+    for url in urls:
+        get_data(get_html(url, headers))
+    '''
+
 
 if __name__ == '__main__':
     main()
