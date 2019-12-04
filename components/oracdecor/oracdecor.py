@@ -11,6 +11,8 @@ import json
 import re
 from selenium import webdriver
 from kafka import KafkaProducer, KafkaConsumer
+import datetime
+
 
 
 def csv_writer(data):
@@ -182,6 +184,7 @@ def get_data(card, html):
     except:
         link = ''
 
+    today_time = str(datetime.date.today())
 
     data ={
         'name': name,
@@ -197,15 +200,18 @@ def get_data(card, html):
         'big_pic': big_pic,
         'text': text,
         'pdfs': db_pdf_list,
-        'link': link
+        'link': link,
+        'parse_date': today_time
     }
     print(data)
-    #csv_writer(data)
-    #producer.send('oracdecor', key=b'oracdecor', value=data)
+
+    producer.send('oracdecor', key=b'row_oracdecor', value=data)
+    #connect_to_database(name, category, specifications, available_text, overview, scheme_picture, banner, max_tag, price_metr, price_one, big_pic, text, db_pdf_list, link, today_time)
 
 
 def main():
     headers = h
+    '''
 
     url = 'https://oracdecor.ru/'
     tabs = get_store_menu(get_html(url, headers))
@@ -234,9 +240,8 @@ def main():
     ]
     for url in urls:
         get_data(url, (get_html(url, headers)))
-
+        sleep(0.1)
         print('-------')
-    '''
 
 if __name__ == '__main__':
     main()

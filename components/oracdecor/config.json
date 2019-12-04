@@ -1,7 +1,7 @@
 {
   "dbname": "parsing_db",
-  "user": "kludi_com",
-  "password": "kludi_com",
+  "user": "oracDecor",
+  "password": "oracDecor",
   "host": "localhost",
   "port": 5432
 }
