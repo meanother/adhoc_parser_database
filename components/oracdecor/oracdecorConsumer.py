@@ -62,4 +62,4 @@ for message in consumer:
         datax['link'],
         datax['parse_date']
     )
-    print('Message inserted successfull ' + message.value)
+    print('Message inserted successfull ' + str(message.value))
