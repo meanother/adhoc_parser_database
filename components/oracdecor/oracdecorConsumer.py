@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from kafka import KafkaProducer, KafkaConsumer
 import json
 import psycopg2
