@@ -178,45 +178,45 @@ def main():
     headers = h
     main_url = 'http://perfect-msk.ru/'
 
-    # first_catalog = get_catalog(get_html(main_url, headers))
-    # for url in first_catalog:
-    #     print('url: ' + url)
-    #     get_underCatalog(get_html(url, headers))
-    #
-    # for under in WITHJS:
-    #     print(under)
-    #     around_java_script(get_html(under, headers))
-    #     sleep(0.4)
-    # print(len(around_js))
-    #
-    # for x in around_js:
-    #     print('now go to parse this url: ' + x)
-    #     get_data(x, get_html(x, headers))
-    #     sleep(0.3)
-    #
-    # print('len after: ' + str(len(bonus_orders)))
-    # print('len before: ' + str(len(set(bonus_orders))))
-    #
-    # for y in set(bonus_orders):
-    #     print('now go to parse this url: ' + y)
-    #     get_data(y, get_html(y, headers))
-    #     sleep(0.3)
+    first_catalog = get_catalog(get_html(main_url, headers))
+    for url in first_catalog:
+        print('url: ' + url)
+        get_underCatalog(get_html(url, headers))
+
+    for under in WITHJS:
+        print(under)
+        around_java_script(get_html(under, headers))
+        sleep(0.4)
+    print(len(around_js))
+
+    for x in around_js:
+        print('now go to parse this url: ' + x)
+        get_data(x, get_html(x, headers))
+        sleep(0.3)
+
+    print('len after: ' + str(len(bonus_orders)))
+    print('len before: ' + str(len(set(bonus_orders))))
+
+    for y in set(bonus_orders):
+        print('now go to parse this url: ' + y)
+        get_data(y, get_html(y, headers))
+        sleep(0.3)
 
 
 
 
 
-    urls = ['http://perfect-msk.ru/ishop/product/793',
-    'http://perfect-msk.ru/ishop/product/811',
-    'http://perfect-msk.ru/ishop/product/1568',
-    'http://perfect-msk.ru/ishop/product/1638',
-    'http://perfect-msk.ru/%D0%BA%D0%BB%D0%B5%D0%B9%20%D0%BC%D0%BE%D0%BD%D1%82%D0%B0%D0%B6%D0%BD%D1%8B%D0%B9',
-    'http://perfect-msk.ru/ishop/product/113',
-    'http://perfect-msk.ru/ishop/product/992']
-    for url in urls:
-        get_data(url, get_html(url, headers))
-        sleep(0.6)
-        print('--------------------------')
+    # urls = ['http://perfect-msk.ru/ishop/product/793',
+    # 'http://perfect-msk.ru/ishop/product/811',
+    # 'http://perfect-msk.ru/ishop/product/1568',
+    # 'http://perfect-msk.ru/ishop/product/1638',
+    # 'http://perfect-msk.ru/%D0%BA%D0%BB%D0%B5%D0%B9%20%D0%BC%D0%BE%D0%BD%D1%82%D0%B0%D0%B6%D0%BD%D1%8B%D0%B9',
+    # 'http://perfect-msk.ru/ishop/product/113',
+    # 'http://perfect-msk.ru/ishop/product/992']
+    # for url in urls:
+    #     get_data(url, get_html(url, headers))
+    #     sleep(0.6)
+    #     print('--------------------------')
 
 
 if __name__ == '__main__':

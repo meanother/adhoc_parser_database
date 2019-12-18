@@ -77,3 +77,7 @@ for message in consumer:
     print('Message inserted successfull ' + str(message.value))
 
 
+
+
+
+
