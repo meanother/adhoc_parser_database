@@ -220,7 +220,7 @@ def main():
         print('this is tab: ' + tab)
         for index in range(1, 20):
             get_cards(get_html(tab+f'?p={index}', headers))
-            sleep(0.2)
+            sleep(0.5)
 
     print('length of first list: ' + str(len(final_list_cards)))
     print('length of set list: ' + str(len(set(final_list_cards))))

@@ -1,0 +1,8 @@
+{
+  "dbname": "parsing_db",
+  "user": "perfect_msk",
+  "password": "perfect_msk",
+  "host": "localhost",
+  "port": 5432
+}
+
