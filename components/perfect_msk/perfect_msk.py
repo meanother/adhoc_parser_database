@@ -11,6 +11,13 @@ import json
 import re
 from kafka import KafkaProducer, KafkaConsumer
 
+
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                         value_serializer=lambda x:
+                         json.dumps(x).encode('utf-8'))
+
+
+
 def csv_writer(data):
     with open('/home/arty/python/adhoc_parser/components/perfect_msk/perfect_msk.csv', 'a', encoding='utf-8') as file:
         writer = csv.writer(file)
@@ -28,19 +35,6 @@ def csv_writer(data):
             data['complect'],
             data['link']
         ))
-
-'''
-        'name': name,
-        'articul': articul,
-        'category1': category1,
-        'category2': category2,
-        'feature': ' ;; '.join(list_features),
-        'description': description,
-        'produce': produce,
-        'price': price,
-        'picture': picture,
-        'recomended': ' ;; '.join(list_recomended)
-'''
 
 
 
@@ -128,7 +122,7 @@ def get_data(urlx, html):
     produce = soup.find('div', class_='prod_dop_option').text.strip()
     # print(produce)
     try:
-        price = soup.find('div', class_='product-prod_prices').find('span', class_='price').text.strip()
+        price = soup.find('div', class_='product-prod_prices').find('span', class_='price').text.strip().replace(' ', '')
     except:
         price = None
     # print(price)
@@ -155,6 +149,9 @@ def get_data(urlx, html):
     except:
         complect = ''
 
+
+    today_time = str(datetime.date.today())
+
     data = {
         'name': name,
         'articul': articul,
@@ -167,10 +164,13 @@ def get_data(urlx, html):
         'picture': picture,
         'recomended': ' ;; '.join(list_recomended),
         'complect': complect,
-        'link': urlx
+        'link': urlx,
+        'parse_date': today_time
     }
     print(data)
-    csv_writer(data)
+    producer.send('perfect_msk', key=b'row_perfect', value=data)
+
+    #csv_writer(data)
 
 
 
@@ -178,44 +178,45 @@ def main():
     headers = h
     main_url = 'http://perfect-msk.ru/'
 
-    first_catalog = get_catalog(get_html(main_url, headers))
-    for url in first_catalog:
-        print('url: ' + url)
-        get_underCatalog(get_html(url, headers))
-
-    for under in WITHJS:
-        print(under)
-        around_java_script(get_html(under, headers))
-        sleep(0.4)
-    print(len(around_js))
-
-    for x in around_js:
-        print('now go to parse this url: ' + x)
-        get_data(x, get_html(x, headers))
-        sleep(0.3)
-
-    print('len after: ' + str(len(bonus_orders)))
-    print('len before: ' + str(len(set(bonus_orders))))
-
-    for y in set(bonus_orders):
-        print('now go to parse this url: ' + y)
-        get_data(y, get_html(y, headers))
-        sleep(0.3)
-
-
+    # first_catalog = get_catalog(get_html(main_url, headers))
+    # for url in first_catalog:
+    #     print('url: ' + url)
+    #     get_underCatalog(get_html(url, headers))
+    #
+    # for under in WITHJS:
+    #     print(under)
+    #     around_java_script(get_html(under, headers))
+    #     sleep(0.4)
+    # print(len(around_js))
+    #
+    # for x in around_js:
+    #     print('now go to parse this url: ' + x)
+    #     get_data(x, get_html(x, headers))
+    #     sleep(0.3)
+    #
+    # print('len after: ' + str(len(bonus_orders)))
+    # print('len before: ' + str(len(set(bonus_orders))))
+    #
+    # for y in set(bonus_orders):
+    #     print('now go to parse this url: ' + y)
+    #     get_data(y, get_html(y, headers))
+    #     sleep(0.3)
 
 
 
-    # urls = ['http://perfect-msk.ru/ishop/product/793',
-    # 'http://perfect-msk.ru/ishop/product/811',
-    # 'http://perfect-msk.ru/ishop/product/1568',
-    # 'http://perfect-msk.ru/ishop/product/1638',
-    # 'http://perfect-msk.ru/%D0%BA%D0%BB%D0%B5%D0%B9%20%D0%BC%D0%BE%D0%BD%D1%82%D0%B0%D0%B6%D0%BD%D1%8B%D0%B9',
-    # 'http://perfect-msk.ru/ishop/product/113',
-    # 'http://perfect-msk.ru/ishop/product/992']
-    # for url in urls:
-    #     get_data(url, get_html(url, headers))
-    #     print('--------------------------')
+
+
+    urls = ['http://perfect-msk.ru/ishop/product/793',
+    'http://perfect-msk.ru/ishop/product/811',
+    'http://perfect-msk.ru/ishop/product/1568',
+    'http://perfect-msk.ru/ishop/product/1638',
+    'http://perfect-msk.ru/%D0%BA%D0%BB%D0%B5%D0%B9%20%D0%BC%D0%BE%D0%BD%D1%82%D0%B0%D0%B6%D0%BD%D1%8B%D0%B9',
+    'http://perfect-msk.ru/ishop/product/113',
+    'http://perfect-msk.ru/ishop/product/992']
+    for url in urls:
+        get_data(url, get_html(url, headers))
+        sleep(0.6)
+        print('--------------------------')
 
 
 if __name__ == '__main__':

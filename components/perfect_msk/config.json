@@ -1,7 +1,7 @@
 {
   "dbname": "parsing_db",
-  "user": "oracdecor",
-  "password": "oracdecor",
+  "user": "perfect_msk",
+  "password": "perfect_msk",
   "host": "localhost",
   "port": 5432
 }
