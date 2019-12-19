@@ -16,7 +16,7 @@ def connect_to_database_home(name, articul, category1, category2, feature, descr
         cursor = connect.cursor()
         cursor.execute('''
         INSERT INTO cr_model.perfect_msk
-        (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, parse_date) 
+        (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, parse_date, link) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, today_time, link))
         cursor.close()
         connect.close()
@@ -38,7 +38,7 @@ def connect_to_database_prod(name, articul, category1, category2, feature, descr
         cursor = connect.cursor()
         cursor.execute('''
         INSERT INTO adhoc_parser.perfect_msk
-        (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, parse_date) 
+        (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, parse_date, link) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, today_time, link))
         cursor.close()
         connect.close()
