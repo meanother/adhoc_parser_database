@@ -4,7 +4,7 @@ import json
 import psycopg2
 
 
-def connect_to_database_home(name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect , today_time):
+def connect_to_database_home(name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect , today_time, link):
     with open('/home/arty/python/adhoc_parser/components/perfect_msk/config.json', 'r') as file1:
         data = json.loads(file1.read())
         connect = psycopg2.connect(dbname='manjaro_db',
@@ -17,7 +17,7 @@ def connect_to_database_home(name, articul, category1, category2, feature, descr
         cursor.execute('''
         INSERT INTO cr_model.perfect_msk
         (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, parse_date) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, today_time))
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, today_time, link))
         cursor.close()
         connect.close()
 
@@ -26,7 +26,7 @@ def connect_to_database_home(name, articul, category1, category2, feature, descr
 
 
 
-def connect_to_database_prod(name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect , today_time):
+def connect_to_database_prod(name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect , today_time, link):
     with open('/home/ubpc/adhoc_parser_database/components/perfect_msk/config.json', 'r') as file1:
         data = json.loads(file1.read())
         connect = psycopg2.connect(dbname=data['dbname'],
@@ -39,7 +39,7 @@ def connect_to_database_prod(name, articul, category1, category2, feature, descr
         cursor.execute('''
         INSERT INTO adhoc_parser.perfect_msk
         (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, parse_date) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, today_time))
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', (name, articul, category1, category2, feature, description, produce, price, picture, recomended, complect, today_time, link))
         cursor.close()
         connect.close()
 
@@ -72,7 +72,8 @@ for message in consumer:
         datax['picture'],
         datax['recomended'],
         datax['complect'],
-        datax['parse_date']
+        datax['parse_date'],
+        datax['link']
     )
     print('Message inserted successfull ' + str(message.value))
 
