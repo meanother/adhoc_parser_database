@@ -47,6 +47,15 @@ def get_componentns():
 
 
 
+message = '\n'.join(get_componentns())
+
+html_intro = '<html><head><meta charset="cp1251"></head><body>'
+html_output = ('<tt><br />{}<br /></tt>'.format(message))
+html_outro = '</body></html>'
+#send_message(RCPLIST, html_intro+html_output+html_outro)
+
+
+
 msg = MIMEMultipart()
 msg['Subject'] = 'Number of rows in tables'
 msg['From'] = 'juicehqperfect@gmail.com'
@@ -55,17 +64,17 @@ msg['To'] = 'juicehq@yandex.ru'
 
 #message = (" ".join(str(x) for x in order)).replace(' ', '\n')
 #message = ("//".join(str(x) for x in order).replace('//', '\n'))
-message = '\n'.join(get_componentns())
 
 
 
 part = MIMEText(message, 'plain')
 msg.attach(part)
 
-passw = str(input('pls enter the password: '))
+passw = input('password')
 server = smtplib.SMTP('smtp.gmail.com:587')
 server.set_debuglevel(True)
 server.starttls()
 server.login('juicehqperfect@gmail.com', passw)
 server.send_message(msg)
+#server.send_message(html_intro + html_output + html_outro)
 server.quit()
