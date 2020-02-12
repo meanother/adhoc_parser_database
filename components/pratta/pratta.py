@@ -112,6 +112,9 @@ def get_calalogue(html):
         bot_element = bot_element.find('h2').find('a').get('href')
         print(bot_element)
         catalogue.append(bot_element)
+    # https://pratta.ru/ideas-catalogue?_exception_statuscode=404&page=
+
+
     return catalogue
 
 list_products = []
@@ -123,6 +126,18 @@ def get_products(html):
         product = 'https://pratta.ru' + product.find('div').find('a').get('href')
         list_products.append(product)
         print(product)
+
+
+def get_products_from_pagination(html):
+    soup = bs(html, 'lxml')
+    pagination = soup.find('div', class_='views-element-container form-group')\
+        .find('div', class_='view-content').find_all('div', class_='views-row')
+    for item in pagination:
+        middle_element = 'https://pratta.ru/' + item.find('div')\
+            .find('div', class_='field-content')\
+            .find('a').get('href')
+        list_products.append(middle_element)
+        print('THIS IS NEW ELEMENT: ' + str(middle_element))
 
 
 
@@ -241,7 +256,7 @@ def get_data(html):
     db_system = ''.join(tab_system)
 
 
-    print(data)
+    #print(data)
     connect_to_database(id, link, name, description, link_material, name_material, price, complexity, price_for_work,
                         db_colors, main_pic, default_pic, db_system, today_time)
 
@@ -257,6 +272,14 @@ def main():
     url = 'https://pratta.ru/ideas-catalogue'
     # Full Catalogue
     catalogue = get_calalogue(get_html(url, headers))
+
+    for num in range(8):
+        page_url = f'https://pratta.ru/ideas-catalogue?_exception_statuscode=404&page={num}'
+        get_products_from_pagination(get_html(page_url, headers))
+        sleep(0.7)
+
+
+
     '''
 
     urls = [
